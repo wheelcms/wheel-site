@@ -1,0 +1,23 @@
+# SITE_ID = 1
+# SECRET_KEY = '..'
+# local mail config
+
+DEBUG = True
+
+SQLITE_DEFAULT_DB = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'stracksite.db',
+}
+
+PG_DEFAULT_DB = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'stracks',
+        'USER': 'stracks',
+        'PASSWORD': 'stracks',
+        'HOST': 'localhost',
+        'PORT': '',
+}
+
+DATABASES = {
+    'default': PG_DEFAULT_DB,
+}
