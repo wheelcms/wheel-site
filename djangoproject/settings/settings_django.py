@@ -15,14 +15,12 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'stracksapp.middleware.StracksMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'stracksapp.middleware.TimezoneMiddleware'
 )
 
-ROOT_URLCONF = 'stracksite.urls'
+ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -33,12 +31,5 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.humanize',
-    'stracksapp',
-    'stracksapi',
-    'stracks_api', ## mostly for testing purposes, has no role in stracksapp/site
-    'two.ol',
-    'two.bootstrap',
-    'two.userauth',
-    'twotest',
 )
 

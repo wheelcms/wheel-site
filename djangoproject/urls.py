@@ -1,10 +1,8 @@
 from django.contrib import admin
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls.defaults import patterns, include
 
 from django.conf import settings
 
-import two.userauth.login
-import two.userauth.signup
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
