@@ -21,3 +21,6 @@ if 'ptest' in sys.argv or 'test' in sys.argv:
         }
     }
 
+## verify required stuff has been set
+if not SECRET_KEY:
+    raise RuntimeError("Configure the SECRET_KEY in settings_django")
