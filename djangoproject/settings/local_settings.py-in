@@ -11,9 +11,9 @@ SQLITE_DEFAULT_DB = {
 
 PG_DEFAULT_DB = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'stracks',
-        'USER': 'stracks',
-        'PASSWORD': 'stracks',
+        'NAME': 'somename',
+        'USER': 'someone',
+        'PASSWORD': 'somesecret',
         'HOST': 'localhost',
         'PORT': '',
 }
