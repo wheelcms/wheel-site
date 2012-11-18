@@ -14,6 +14,7 @@ urlpatterns = staticfiles_urlpatterns()
 
 urlpatterns += patterns('',
     (r'^admin/', include(admin.site.urls)),
+    (r'', include('wheelcms_axe.urls')),
 )
 
 if settings.DEBUG:

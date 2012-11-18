@@ -31,5 +31,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.humanize',
+
+    'wheelcms_axe',
+    'wheelcms_spokes',
+
+    'tinymce',
+    'two.ol',
+    'two.bootstrap',
+
+
 )
 
