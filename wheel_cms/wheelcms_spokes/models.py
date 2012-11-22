@@ -1,5 +1,5 @@
 from django.db import models
-from wheel_axe.models import Node
+from wheelcms_axe.models import Node
 
 class Page(models.Model):
     node = models.ForeignKey(Node, related_name="spoke_pages")
