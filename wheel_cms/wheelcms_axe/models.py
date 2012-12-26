@@ -72,10 +72,12 @@ class NodeBase(models.Model):
                     ## "before.position", renumber before and everything
                     ## else after it.
                     position = before.position
-                    everything_after = self.childrenq(position__gte=before.position,
-                                                      order="position")
+                    everything_after = self.childrenq(
+                                           position__gte=before.position,
+                                           order="position")
                     for i, n in enumerate(everything_after):
-                        n.position = position + ((i + 1) * self.POSITION_INTERVAL)
+                        n.position = position + ((i + 1) *
+                                                 self.POSITION_INTERVAL)
                         n.save()
                     # XXX self.debug("repositioning children")
             except Node.DoesNotExist:

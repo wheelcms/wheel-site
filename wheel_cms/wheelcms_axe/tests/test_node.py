@@ -154,6 +154,19 @@ class TestNode(object):
         assert children[0].position < children[1].position \
                < children[2].position
 
+    def test_position_twice(self, client):
+        """ inserting at the same position twice - it's allowed
+            but results in undetermined order """
+        root = Node.root()
+        c1 = root.add("c1", position=100)
+        c2 = root.add("c2", position=100)
+        c3 = root.add("c3", position=100)
+
+        children = set(root.children())
+        assert children == set((c3, c1, c2))
+        assert children[0].position < children[1].position \
+               < children[2].position
+
 
 class TestNodeBase(object):
     """ The base class of a node can be altered. """
