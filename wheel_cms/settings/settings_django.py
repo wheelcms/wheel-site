@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'tinymce',
     'two.ol',
     'two.bootstrap',
+    'twotest',
 
 
 )
