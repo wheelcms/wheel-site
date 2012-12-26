@@ -171,6 +171,7 @@ class ContentBase(models.Model):
         abstract = True
 
     def save(self, *a, **b):
+        ## XXX can this be replaced by a default on meta_type?
         mytype = self.__class__.__name__.lower()
         self.meta_type = mytype
         super(ContentBase, self).save(*a, **b)
