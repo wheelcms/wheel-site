@@ -10,6 +10,9 @@ class DuplicatePathException(NodeException):
 class InvalidPathException(NodeException):
     pass
 
+class NodeInUse(NodeException):
+    pass
+
 class NodeBase(models.Model):
     ROOT_PATH = ""
     ALLOWED_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789_-"
@@ -24,6 +27,36 @@ class NodeBase(models.Model):
 
     class Meta:
         abstract = True
+
+    def content(self):
+        return self.contentbase.content()
+
+    def set(self, content, replace=False):
+        """
+            Set content on the node, optionally replacing existing
+            content. This is a more friendly way of setting the node
+            on a Content directly
+        """
+        ## just to be sure, in case it's of type Content in stead of
+        ## subclass
+        content = content.content()
+
+        old = None
+        try:
+            if self.contentbase:
+                if replace:
+                    old = self.content()
+                    old.node = None
+                    old.save()
+                else:
+                    raise NodeInUse()
+        except Content.DoesNotExist:
+            pass
+
+        self.contentbase = content.content_ptr  # XXX is _ptr documented?
+        self.save()
+
+        return old
 
     @classmethod
     def root(cls):
@@ -125,26 +158,28 @@ class Node(WHEEL_NODE_BASECLASS):
     pass
 
 class ContentBase(models.Model):
-    node = models.OneToOneField(Node, related_name="%(app_label)s_%(class)s_related")
+    node = models.OneToOneField(Node, related_name="contentbase", null=True)
     title = models.TextField(blank=False)
     created = models.DateTimeField(null=True)
     modified = models.DateTimeField(null=True)
     publication = models.DateTimeField(null=True)
     expire = models.DateTimeField(null=True)
-    
+
     type = models.CharField(max_length=20)
 
     class Meta:
         abstract = True
-    @classmethod
-    def register_spoke(cls, spoke):
-        cls.registry[spoke.content.related_name]
 
-    def spoke(self):
-        return getattr(self, self.spoke_registry[self.type].related_name)
-    ## owner, ?
+    def save(self, *a, **b):
+        mytype = self.__class__.__name__.lower()
+        self.type = mytype
+        super(ContentBase, self).save(*a, **b)
 
-WHEEL_CONTENT_BASECLASS = models.Model
+    def content(self):
+        if self.type:
+            return getattr(self, self.type)
+
+WHEEL_CONTENT_BASECLASS = ContentBase
 
 class Content(WHEEL_CONTENT_BASECLASS):
     pass

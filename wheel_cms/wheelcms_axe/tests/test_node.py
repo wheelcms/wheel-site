@@ -162,10 +162,14 @@ class TestNode(object):
         c2 = root.add("c2", position=100)
         c3 = root.add("c3", position=100)
 
-        children = set(root.children())
-        assert children == set((c3, c1, c2))
-        assert children[0].position < children[1].position \
-               < children[2].position
+        children = root.children()
+        assert set(children) == set((c3, c1, c2))
+        assert children[0].position == children[1].position \
+               == children[2].position
+
+    def test_direct_path(self, client):
+        """ retrieve a node directly through its path """
+        py.test.skip("to be implemented")
 
 
 class TestNodeBase(object):
