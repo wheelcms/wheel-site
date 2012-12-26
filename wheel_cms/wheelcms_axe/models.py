@@ -65,7 +65,7 @@ class NodeBase(models.Model):
             try:
                 beforebefore_all = self.childrenq(position__lt=before.position,
                                             order="position")
-                beforebefore = beforebefore_all.reverse().get()
+                beforebefore = beforebefore_all.latest("position")
                 position = (before.position + beforebefore.position) / 2
                 if position == beforebefore.position:
                     ## there's a conflict. the new position will be 
