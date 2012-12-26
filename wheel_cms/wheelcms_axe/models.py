@@ -165,19 +165,19 @@ class ContentBase(models.Model):
     publication = models.DateTimeField(null=True)
     expire = models.DateTimeField(null=True)
 
-    type = models.CharField(max_length=20)
+    meta_type = models.CharField(max_length=20)
 
     class Meta:
         abstract = True
 
     def save(self, *a, **b):
         mytype = self.__class__.__name__.lower()
-        self.type = mytype
+        self.meta_type = mytype
         super(ContentBase, self).save(*a, **b)
 
     def content(self):
-        if self.type:
-            return getattr(self, self.type)
+        if self.meta_type:
+            return getattr(self, self.meta_type)
 
 WHEEL_CONTENT_BASECLASS = ContentBase
 
