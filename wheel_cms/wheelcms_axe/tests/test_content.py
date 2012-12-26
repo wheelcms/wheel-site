@@ -6,6 +6,8 @@ from django.db import IntegrityError
 import pytest
 
 class TestContent(object):
+    """ Test content / content-node related stuff """
+
     def test_duplicate_content(self, client):
         """ two content objects cannot point to the same node """
         root = Node.root()
