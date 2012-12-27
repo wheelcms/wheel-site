@@ -3,6 +3,18 @@
 
 {% block base_main %}
 <p>
+Path: {{instance.path}}
+Title: {{instance.content.title}}
+Body (page only): {{instance.content.body}}
+<br>
+<b>children</b>
+{% for child in instance.children %}
+<a href="{{child.path}}">{{child.content.title}}</a><br>
+{% endfor %}
+<a href="/_{{instance.path}}/create">Create new subpage</a>
+</p>
+{% if 0 %}
+<p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vulputate odio a massa pellentesque sed ultricies arcu pellentesque. Pellentesque egestas lorem eu libero posuere ut iaculis tortor varius. In suscipit tincidunt neque quis sagittis. Proin viverra quam ut nunc volutpat eu dapibus risus ultrices. Nunc nec pulvinar ante. Aliquam erat volutpat. Donec pharetra dolor vel nibh iaculis tristique. Duis sapien purus, ultricies eget auctor ut, viverra elementum ligula. Sed sollicitudin tincidunt nunc nec convallis. Mauris commodo, lorem non imperdiet mollis, massa tellus pretium sem, sit amet pellentesque nibh lacus sit amet nunc. Cras scelerisque tristique eleifend.
 </p><p>
 Praesent mi nisi, auctor eu porta ornare, pulvinar egestas elit. Nulla adipiscing nisl nec libero feugiat nec posuere dui ultricies. Maecenas ac urna in magna tempus fermentum at non lacus. Fusce semper metus sed purus porttitor quis ultrices ipsum suscipit. Nullam et sagittis ligula. Pellentesque sit amet mollis leo. Duis eget mauris leo, non gravida nulla. Nunc non sapien tellus, eu porttitor est. Maecenas cursus, lectus porta aliquet aliquet, massa sem eleifend urna, tincidunt tincidunt libero felis a nibh. Nam condimentum tellus eget augue pretium eleifend. Quisque sit amet ante elit. Nulla facilisi. Sed at mollis mauris. Nunc rhoncus turpis vel tortor pellentesque suscipit. Cras quis pretium augue.
@@ -38,4 +50,5 @@ In elementum scelerisque est eget viverra. Nullam tellus tortor, ornare sit amet
 </p><p>
 Suspendisse congue enim at nunc imperdiet euismod. Donec cursus, lorem vel vulputate blandit, odio odio porta lorem, in vestibulum massa dui sodales mauris. Donec justo sem, luctus at lobortis vel, elementum et purus. Nulla lobortis, sapien at pharetra ornare, quam sem dictum leo, vel ultrices eros nibh et ante. Nunc quam turpis, mollis pulvinar condimentum nec, euismod a metus. Cras quis ligula at dui lacinia suscipit. In fringilla convallis euismod.
 </p>
+{% endif %}
 {% endblock %}

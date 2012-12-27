@@ -61,7 +61,9 @@ class NodeBase(models.Model):
         except Content.DoesNotExist:
             pass
 
-        self.contentbase = content.content_ptr  # XXX is _ptr documented?
+        self.contentbase = content #.content_ptr  # XXX is _ptr documented?
+        #content.node = self
+        content.save()
         self.save()
 
         return old
@@ -168,10 +170,10 @@ class Node(WHEEL_NODE_BASECLASS):
 class ContentBase(models.Model):
     node = models.OneToOneField(Node, related_name="contentbase", null=True)
     title = models.TextField(blank=False)
-    created = models.DateTimeField(null=True)
-    modified = models.DateTimeField(null=True)
-    publication = models.DateTimeField(null=True)
-    expire = models.DateTimeField(null=True)
+    created = models.DateTimeField(blank=True, null=True)
+    modified = models.DateTimeField(blank=True, null=True)
+    publication = models.DateTimeField(blank=True, null=True)
+    expire = models.DateTimeField(blank=True, null=True)
 
     meta_type = models.CharField(max_length=20)
 
@@ -188,8 +190,18 @@ class ContentBase(models.Model):
         if self.meta_type:
             return getattr(self, self.meta_type)
 
+    def __unicode__(self):
+        try:
+            return u"%s connected to node %s: %s" % (self.meta_type, self.node, self.title)
+        except Node.DoesNotExist:
+            return u"Unconnected %s: %s" % (self.meta_type, self.title)
+
 WHEEL_CONTENT_BASECLASS = ContentBase
 
 class Content(WHEEL_CONTENT_BASECLASS):
     pass
+
+class Page(Content):
+    """ move to spokes """
+    body = models.TextField(blank=False)
 

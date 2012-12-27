@@ -35,8 +35,9 @@ class TestContent(object):
         c1 = Type1()
         c1.save()
         child1.set(c1)
-
+        c1 = Type1.objects.get(pk=c1.pk)  ## get updated state
         assert child1.content() == c1
+        assert c1.node == child1
 
     def test_node_set_base(self, client):
         """ test the node.set method  with Content instance """
