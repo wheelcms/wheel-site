@@ -182,6 +182,12 @@ class TestNode(object):
         Node.root().add("a").add("b").add("c")
         assert Node.get("/d/e/f") is None
 
+    def test_move_after(self, client):
+        """ move an existing node after another node.
+            Not yet implemented; implementation requires 
+            refactoring of add() code (which should do create
+            at bottom + move) """
+        py.test.skip("To do")
 
 class TestNodeBase(object):
     """ The base class of a node can be altered. """
