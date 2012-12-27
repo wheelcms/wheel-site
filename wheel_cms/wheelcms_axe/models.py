@@ -31,6 +31,14 @@ class NodeBase(models.Model):
     def content(self):
         return self.contentbase.content()
 
+    @classmethod
+    def get(cls, path):
+        """ retrieve node directly by path. Returns None if not found """
+        try:
+            return cls.objects.get(path=path)
+        except cls.DoesNotExist:
+            return None
+
     def set(self, content, replace=False):
         """
             Set content on the node, optionally replacing existing

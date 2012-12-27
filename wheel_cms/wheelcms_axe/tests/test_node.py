@@ -167,9 +167,20 @@ class TestNode(object):
         assert children[0].position == children[1].position \
                == children[2].position
 
+    def test_direct_root(self, client):
+        """ retrieve the root node directly through its path """
+        n = Node.root()
+        assert Node.get("") == n
+
     def test_direct_path(self, client):
         """ retrieve a node directly through its path """
-        py.test.skip("to be implemented")
+        n = Node.root().add("a").add("b").add("c")
+        assert Node.get("/a/b/c") == n
+
+    def test_direct_path_notfound(self, client):
+        """ retrieve a node directly through its path """
+        Node.root().add("a").add("b").add("c")
+        assert Node.get("/d/e/f") is None
 
 
 class TestNodeBase(object):
