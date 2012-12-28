@@ -13,6 +13,13 @@ class MainHandler(WheelRESTHandler):
         self.context['type_registry'] = type_registry
 
     def formclass(self, data=None, instance=None):
+        if 'nodepath' in self.kw:
+            parent = Node.get('/' + self.kw['nodepath'])
+            ## if there's an instance, we're in update/edit mode in stead
+            ## of create
+        else:
+            parent = None
+        
         type = self.request.REQUEST.get('type')
         if type is None and self.instance:
             type = self.instance.content().meta_type
@@ -22,7 +29,7 @@ class MainHandler(WheelRESTHandler):
 
         typeinfo = type_registry.get(type)
         
-        return typeinfo['form'](data=data, instance=instance)
+        return typeinfo['form'](parent=parent, data=data, instance=instance)
 
     @classmethod
     def coerce(cls, i):
@@ -35,12 +42,15 @@ class MainHandler(WheelRESTHandler):
 
         if self.post:
             if self.form.is_valid():
+                ## form validation should handle slug uniqueness (?)
                 p = self.form.save()
-                sub = parent.add("x")
+                slug = self.form.cleaned_data['slug']
+                sub = parent.add(slug)
                 sub.set(p)
                 return self.redirect(parent.path, success="Ok")
         else:
             self.context['form'] = self.formclass()
+        self.context['type'] = self.request.REQUEST['type']
         return self.template("wheelcms_axe/create.html")
 
     def view(self):

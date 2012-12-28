@@ -1,5 +1,8 @@
 from django.db import models, IntegrityError
+from django.utils import timezone
+
 import re
+import datetime
 
 class NodeException(Exception):
     pass
@@ -167,13 +170,24 @@ WHEEL_NODE_BASECLASS = NodeBase
 class Node(WHEEL_NODE_BASECLASS):
     pass
 
+def far_future():
+    """ default expiration is roughly 20 years from now """
+    return timezone.now() + datetime.timedelta(days=(20*365+8))
+
 class ContentBase(models.Model):
     node = models.OneToOneField(Node, related_name="contentbase", null=True)
-    title = models.TextField(blank=False)
+    title = models.CharField(max_length=256, blank=False)
     created = models.DateTimeField(blank=True, null=True)
     modified = models.DateTimeField(blank=True, null=True)
-    publication = models.DateTimeField(blank=True, null=True)
-    expire = models.DateTimeField(blank=True, null=True)
+    publication = models.DateTimeField(blank=True, null=True,
+                                       default=timezone.now)
+    expire = models.DateTimeField(blank=True, null=True,
+                                  default=far_future)
+
+    ## workflow determines possible states and their meaning
+    state = models.CharField(max_length=30, blank=True)
+    ## one could argue that this can be a property on a node
+    navigation = models.BooleanField(default=False)
 
     meta_type = models.CharField(max_length=20)
 
@@ -184,6 +198,9 @@ class ContentBase(models.Model):
         ## XXX can this be replaced by a default on meta_type?
         mytype = self.__class__.__name__.lower()
         self.meta_type = mytype
+        self.modified = timezone.now()
+        if self.created is None:
+            self.created = timezone.now()
         super(ContentBase, self).save(*a, **b)
 
     def content(self):

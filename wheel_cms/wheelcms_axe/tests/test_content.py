@@ -2,6 +2,7 @@ from wheelcms_axe.models import Node
 from wheelcms_axe.tests.models import Type1, Type2
 
 from django.db import IntegrityError
+from django.utils import timezone
 
 import pytest
 
@@ -63,3 +64,22 @@ class TestContent(object):
         assert child1.content() == c2
         assert old == c1
 
+    def test_content_default(self, client):
+        """ test defaults on new content """
+        c1 = Type1()
+        c1.save()
+        assert c1.created
+        assert c1.modified
+        assert c1.publication
+        assert c1.expire > timezone.now()
+        assert not c1.navigation
+
+    def test_content_default(self, client):
+        """ test defaults on updated content """
+        c1 = Type1()
+        c1.save()
+        created = c1.created
+        modified = c1.modified
+        c1.save()
+        assert c1.modified > modified
+        assert c1.created == created
