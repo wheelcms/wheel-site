@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 import re
 import random
 
-from wheelcms_axe.models import Node, Page
+from wheelcms_axe.models import Node
+from wheelcms_spokes.models import Page
 
 class Command(BaseCommand):
     """ Normalize existing usernames to match allowed characters """

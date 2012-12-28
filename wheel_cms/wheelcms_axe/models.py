@@ -201,7 +201,9 @@ WHEEL_CONTENT_BASECLASS = ContentBase
 class Content(WHEEL_CONTENT_BASECLASS):
     pass
 
-class Page(Content):
-    """ move to spokes """
-    body = models.TextField(blank=False)
 
+class TypeRegistry(dict):
+    def register(self, name, model, form):
+        self[name] = dict(model=model, form=form)
+
+type_registry = TypeRegistry()

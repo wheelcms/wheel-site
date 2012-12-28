@@ -18,9 +18,20 @@
       <div class="nav-collapse collapse">
         <ul class="nav">
         <!-- .nav, .navbar-search, .navbar-form, etc -->
-        <li><a href="">Optie 1</a></li>
-        <li><a href="">Optie 2</a></li>
-        <li><a href="">Optie 3</a></li>
+          <li class="dropup">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Create
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              {% for name, info in type_registry.iteritems %}
+                <li><a href="/_{{instance.path}}/create?type={{name}}">{{name}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li><a href="">Optie 1</a></li>
+          <li><a href="">Optie 2</a></li>
+          <li><a href="">Optie 3</a></li>
         </ul>
       </div>
       <div class="pull-right">

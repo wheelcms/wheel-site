@@ -1,18 +1,28 @@
 from two.ol.base import RESTLikeHandler
-from wheelcms_axe.models import Node, Page
-from django import forms
+from wheelcms_axe.models import Node, type_registry
 
 class WheelRESTHandler(RESTLikeHandler):
     pass
 
-class PageForm(forms.ModelForm):
-    class Meta:
-        model = Page
-        exclude = ["node", "meta_type"]
 
 class MainHandler(WheelRESTHandler):
     model = Node
-    formclass = PageForm
+
+    def update_context(self, request):
+        super(MainHandler, self).update_context(request)
+        self.context['type_registry'] = type_registry
+
+    def formclass(self, data=None, instance=None):
+        type = self.request.REQUEST.get('type')
+        if type is None and self.instance:
+            type = self.instance.content().meta_type
+
+        if type is None:
+            return None
+
+        typeinfo = type_registry.get(type)
+        
+        return typeinfo['form'](data=data, instance=instance)
 
     @classmethod
     def coerce(cls, i):
@@ -30,7 +40,7 @@ class MainHandler(WheelRESTHandler):
                 sub.set(p)
                 return self.redirect(parent.path, success="Ok")
         else:
-            self.context['form'] = PageForm()
+            self.context['form'] = self.formclass()
         return self.template("wheelcms_axe/create.html")
 
     def view(self):
