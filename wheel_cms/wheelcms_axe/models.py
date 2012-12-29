@@ -162,6 +162,10 @@ class NodeBase(models.Model):
     def children(self, order="position"):
         return self.childrenq(order=order)
 
+    def slug(self):
+        """ last part of self.path """
+        return self.path.rsplit("/", 1)[-1]
+
     def __unicode__(self):
         """ readable representation """
         return u"path %s pos %d" % (self.path, self.position)

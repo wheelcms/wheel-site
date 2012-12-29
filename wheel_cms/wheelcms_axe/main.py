@@ -24,11 +24,10 @@ class MainHandler(WheelRESTHandler):
         if type is None and self.instance:
             type = self.instance.content().meta_type
 
-        if type is None:
+        if not type:
             return None
 
         typeinfo = type_registry.get(type)
-        
         return typeinfo['form'](parent=parent, data=data, instance=instance)
 
     @classmethod
@@ -40,6 +39,7 @@ class MainHandler(WheelRESTHandler):
     def create(self, *a, **b):
         parent = Node.get("/" + self.kw.get('nodepath'))
 
+        self.context['instance'] = parent
         if self.post:
             if self.form.is_valid():
                 ## form validation should handle slug uniqueness (?)
@@ -52,6 +52,23 @@ class MainHandler(WheelRESTHandler):
             self.context['form'] = self.formclass()
         self.context['type'] = self.request.REQUEST['type']
         return self.template("wheelcms_axe/create.html")
+
+    def update(self):
+        self.context['instance'] = instance = Node.get("/" + self.kw.get("nodepath"))
+        parent = instance.parent()
+        type = instance.content().meta_type
+        typeinfo = type_registry.get(type)
+        form =  typeinfo['form']
+        slug = instance.slug()
+
+        if self.post:
+            self.context['form'] = form(parent=parent, data=self.request.POST,
+                                        instance=instance.content())
+
+        else:
+            self.context['form'] = form(parent=parent, initial=dict(slug=slug), instance=instance.content())
+        
+        return self.template("wheelcms_axe/update.html")
 
     def view(self):
         """ frontpage / view """
