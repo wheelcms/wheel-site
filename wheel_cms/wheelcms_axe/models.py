@@ -166,6 +166,14 @@ class NodeBase(models.Model):
         """ last part of self.path """
         return self.path.rsplit("/", 1)[-1]
 
+    def set_slug(self, slug):
+        """ change the slug """
+        newpath = self.path.rsplit("/", 1)[0] + "/" + slug
+        if Node.objects.filter(path=newpath).count():
+            raise DuplicatePathException(newpath)
+        self.path = newpath
+        self.save()
+
     def __unicode__(self):
         """ readable representation """
         return u"path %s pos %d" % (self.path, self.position)

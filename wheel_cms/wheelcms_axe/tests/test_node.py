@@ -1,5 +1,5 @@
 from wheelcms_axe.models import Node, DuplicatePathException
-from wheelcms_axe.models import InvalidPathException
+from wheelcms_axe.models import InvalidPathException, NodeInUse
 import py.test
 
 class TestNode(object):
@@ -188,6 +188,21 @@ class TestNode(object):
             refactoring of add() code (which should do create
             at bottom + move) """
         py.test.skip("To do")
+
+    def test_change_slug(self, client):
+        """ change a slug """
+        node = Node.root().add("aaa").add("bbb")
+        assert node.slug() == "bbb"
+        node.set_slug("ccc")
+        assert node.slug() == "ccc"
+
+    def test_change_slug_duplicate(self, client):
+        """ change a slug """
+        aaa = Node.root().add("aaa")
+        aaa.add("bbb")
+        node = aaa.add("bbb2")
+        py.test.raises(DuplicatePathException, node.set_slug, "bbb")
+        assert node.slug() == "bbb2"
 
 class TestNodeBase(object):
     """ The base class of a node can be altered. """

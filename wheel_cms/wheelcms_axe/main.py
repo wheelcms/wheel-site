@@ -89,6 +89,10 @@ class MainHandler(WheelRESTHandler):
             if form.is_valid():
                 form.save()
                 ## handle changed slug
+                slug = form.cleaned_data['slug']
+                if slug != self.instance.slug():
+                    self.instance.set_slug(slug)
+
                 return self.redirect(instance.path, success="Updated")
         else:
             self.context['form'] = formclass(parent=parent, initial=dict(slug=slug), instance=instance.content())

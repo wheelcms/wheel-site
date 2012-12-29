@@ -1,4 +1,4 @@
-from wheelcms_axe.models import Node
+from wheelcms_axe.models import Node, NodeInUse
 from wheelcms_axe.tests.models import Type1, Type2
 
 from django.db import IntegrityError
@@ -64,6 +64,17 @@ class TestContent(object):
         assert child1.content() == c2
         assert old == c1
 
+    def test_node_set_inuse(self, client):
+        """ a node can not hold two content items """
+        root = Node.root()
+        child1 = root.add("n1")
+        c1 = Type1()
+        c1.save()
+        child1.set(c1)
+        c2 = Type2()
+        c2.save()
+        pytest.raises(NodeInUse, child1.set, c2)
+
     def test_content_default(self, client):
         """ test defaults on new content """
         c1 = Type1()
@@ -74,7 +85,7 @@ class TestContent(object):
         assert c1.expire > timezone.now()
         assert not c1.navigation
 
-    def test_content_default(self, client):
+    def test_content_default_update(self, client):
         """ test defaults on updated content """
         c1 = Type1()
         c1.save()
