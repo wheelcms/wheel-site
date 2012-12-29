@@ -3,9 +3,14 @@ from two.ol.base import twpatterns
 from wheelcms_axe.main import MainHandler
 
 urlpatterns = patterns('',
-    ## special case for /create and /edit (on root) -> /_/create and /_/edit
-    twpatterns("_/(?P<nodepath>(.*))", MainHandler, name="wheel_main"),
-    # twpatterns("(?P<instance>(_))", MainHandler, name="wheel_main"),
-    twpatterns("(?P<instance>.*)", MainHandler, name="wheel_main"),
+    ## handle /@/create for creation under root
+    twpatterns("@", MainHandler, name="wheel_main", parent=""),
+    ## handle direct root access
     twpatterns("/", MainHandler, name="wheel_main"),
+    ## handle /path/@/create for creation somewhere deeped
+    twpatterns("(?P<parent>.*)/@", MainHandler, name="wheel_main"),
+    ## don't really need this? /<instance>/op works fine...
+    twpatterns("(?P<parent>.*)/@/(?P<instance>[^/]*)", MainHandler, name="wheel_main"),
+    ## for basic node access:
+    twpatterns("(?P<instance>.*)", MainHandler, name="wheel_main"),
 )

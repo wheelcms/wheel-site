@@ -11,6 +11,5 @@ Body (page only): {{instance.content.body}}
 {% for child in instance.children %}
 <a href="{{child.path}}">{{child.content.title}}</a><br>
 {% endfor %}
-<a href="/_{{instance.path}}/create">Create new subpage</a>
 </p>
 {% endblock %}

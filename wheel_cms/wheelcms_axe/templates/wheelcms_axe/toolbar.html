@@ -22,11 +22,11 @@
             </a>
             <ul class="dropdown-menu">
               {% for name, info in type_registry.iteritems %}
-                <li><a href="/_{{instance.path}}/create?type={{name}}">{{name}}</a></li>
+                <li><a href="{{instance.path}}/@/create?type={{name}}">{{name}}</a></li>
               {% endfor %}
             </ul>
           </li>
-          <li><a href="/_{{instance.path}}/edit"><i class="icon-edit"></i> Edit {{instance.title}}</a></li>
+          <li><a href="{{instance.path}}/edit"><i class="icon-edit"></i> Edit {{instance.content.title}}</a></li>
         </ul>
       </div>
       <div class="pull-right">

@@ -24,8 +24,13 @@ class BaseForm(forms.ModelForm):
         slug = self.data.get('slug', '').strip().lower()
         if not Node.validpathre.match(slug):
             raise forms.ValidationError("Only numbers, letters, _-")
-        if Node.objects.filter(path=self.parent.path + "/" + slug).count():
-            raise forms.ValidationError("Name in use")
+        try:
+            existing = Node.objects.filter(path=self.parent.path + "/" + slug).get()
+            if existing != self.instance.node:
+                raise forms.ValidationError("Name in use")
+        except Node.DoesNotExist:
+            pass
+
         return slug
 
 def formfactory(type):

@@ -6,67 +6,92 @@ class WheelRESTHandler(RESTLikeHandler):
 
 
 class MainHandler(WheelRESTHandler):
-    model = Node
+    model = dict(instance=Node, parent=Node)
+    instance = None
+    parent = None
 
     def update_context(self, request):
         super(MainHandler, self).update_context(request)
         self.context['type_registry'] = type_registry
 
     def formclass(self, data=None, instance=None):
-        if 'nodepath' in self.kw:
-            parent = Node.get('/' + self.kw['nodepath'])
-            ## if there's an instance, we're in update/edit mode in stead
-            ## of create
-        else:
-            parent = None
-        
-        type = self.request.REQUEST.get('type')
-        if type is None and self.instance:
-            type = self.instance.content().meta_type
+        if not self.instance:
+            return None
+
+        type = self.instance.content().meta_type
 
         if not type:
             return None
 
         typeinfo = type_registry.get(type)
+        parent = self.instance.parent()
         return typeinfo['form'](parent=parent, data=data, instance=instance)
 
     @classmethod
     def coerce(cls, i):
-        """ map path to node """
-        if i.get('instance'):
-            return Node.get("/" + i['instance'])
+        """
+            coerce either a parent and instance, a parent or an instance.
+            If there's both a parent and an instance, the instance is relative
+            to the parent, so resolving needs to be done by combing them
+
+            We're supporting the parent/instance combo (somewhat) but don't
+            really need it - <instance>/update works fine, and no instance is
+            required for /create
+        """
+        d = dict()
+        # import pdb; pdb.set_trace()
+
+        parent_path = ""
+        if i.get('parent') is not None:
+            parent_path = i['parent']
+            if parent_path:
+                parent_path = '/' + parent_path
+            d['parent'] = Node.get(parent_path)
+
+        if i.get('instance') is not None:
+            d['instance'] = Node.get(parent_path + '/' + i['instance'])
+        return d
 
     def create(self, *a, **b):
-        parent = Node.get("/" + self.kw.get('nodepath'))
+        type = self.request.REQUEST.get('type')
+        formclass = type_registry.get(type)['form']
 
-        self.context['instance'] = parent
+        parent = self.parent
+
         if self.post:
+            self.form = formclass(data=self.request.POST, parent=parent)
             if self.form.is_valid():
                 ## form validation should handle slug uniqueness (?)
                 p = self.form.save()
                 slug = self.form.cleaned_data['slug']
                 sub = parent.add(slug)
                 sub.set(p)
-                return self.redirect(parent.path, success="Ok")
+                return self.redirect(parent.path or '/', success="Ok")
         else:
-            self.context['form'] = self.formclass()
+            self.context['form'] = formclass()
         self.context['type'] = self.request.REQUEST['type']
         return self.template("wheelcms_axe/create.html")
 
     def update(self):
-        self.context['instance'] = instance = Node.get("/" + self.kw.get("nodepath"))
+        instance = self.instance
         parent = instance.parent()
+
         type = instance.content().meta_type
         typeinfo = type_registry.get(type)
-        form =  typeinfo['form']
+        formclass =  typeinfo['form']
         slug = instance.slug()
 
         if self.post:
-            self.context['form'] = form(parent=parent, data=self.request.POST,
-                                        instance=instance.content())
+            self.context['form'] = form = formclass(parent=parent,
+                                                    data=self.request.POST,
+                                                    instance=instance.content())
 
+            if form.is_valid():
+                form.save()
+                ## handle changed slug
+                return self.redirect(instance.path, success="Updated")
         else:
-            self.context['form'] = form(parent=parent, initial=dict(slug=slug), instance=instance.content())
+            self.context['form'] = formclass(parent=parent, initial=dict(slug=slug), instance=instance.content())
         
         return self.template("wheelcms_axe/update.html")
 
