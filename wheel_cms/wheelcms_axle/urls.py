@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns
 from two.ol.base import twpatterns
-from wheelcms_axe.main import MainHandler
+from wheelcms_axle.main import MainHandler
 
 urlpatterns = patterns('',
     ## handle /@/create for creation under root

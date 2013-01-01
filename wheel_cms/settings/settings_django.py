@@ -32,7 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
 
-    'wheelcms_axe',
+    'wheelcms_axle',
     'wheelcms_spokes',
 
     'tinymce',

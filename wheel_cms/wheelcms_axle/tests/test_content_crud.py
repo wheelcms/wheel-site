@@ -1,5 +1,5 @@
-from wheelcms_axe.models import Node
-from wheelcms_axe.tests.models import Type1
+from wheelcms_axle.models import Node
+from wheelcms_axle.tests.models import Type1
 from wheelcms_spokes.models import formfactory
 
 class TestContentCreate(object):

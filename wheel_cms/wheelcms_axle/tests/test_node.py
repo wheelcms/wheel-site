@@ -1,5 +1,5 @@
-from wheelcms_axe.models import Node, DuplicatePathException
-from wheelcms_axe.models import InvalidPathException, NodeInUse
+from wheelcms_axle.models import Node, DuplicatePathException
+from wheelcms_axle.models import InvalidPathException, NodeInUse
 import py.test
 
 class TestNode(object):

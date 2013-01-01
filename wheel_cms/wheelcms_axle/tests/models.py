@@ -1,4 +1,4 @@
-from wheelcms_axe.models import Content
+from wheelcms_axle.models import Content
 from wheelcms_spokes.models import formfactory, Spoke
 
 class Type1(Content):
@@ -13,7 +13,7 @@ class Type2(Content):
 class Type2Type(Spoke):
     model = Type2
 
-from wheelcms_axe.models import type_registry
+from wheelcms_axle.models import type_registry
 
 type_registry.register(Type1Type)
 type_registry.register(Type2Type)

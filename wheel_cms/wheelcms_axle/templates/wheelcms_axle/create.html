@@ -1,9 +1,9 @@
-{% extends "wheelcms_axe/base.html" %}
+{% extends "wheelcms_axle/base.html" %}
 
 
 {% block base_main %}
 <p>
-Edit Path: {{instance.path}} / {{instance.content.title}}
+Create on Path: {{instance.path}} / {{instance.content.title}}
 </p>
 <form method="post" action="." class="form-horizontal">
   {% csrf_token %}

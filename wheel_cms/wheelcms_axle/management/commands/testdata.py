@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 import re
 import random
 
-from wheelcms_axe.models import Node
+from wheelcms_axle.models import Node
 from wheelcms_spokes.models import Page
 
 class Command(BaseCommand):

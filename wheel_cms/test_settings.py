@@ -1,3 +1,3 @@
 from settings.base import *
 
-INSTALLED_APPS += ("wheelcms_axe.tests", )
+INSTALLED_APPS += ("wheelcms_axle.tests", )

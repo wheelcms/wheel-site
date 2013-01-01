@@ -1,7 +1,7 @@
 from django.db import models
 from django import forms
-from wheelcms_axe.models import Content, Node
-from wheelcms_axe.models import type_registry
+from wheelcms_axle.models import Content, Node
+from wheelcms_axle.models import type_registry
 
 from two.ol.util import classproperty
 
@@ -62,7 +62,7 @@ class Spoke(object):
         return cls.model._meta.object_name.lower()  ## app_label
 
     def view_template(self):
-        return "wheelcms_axe/content_view.html"
+        return "wheelcms_axle/content_view.html"
 
     def fields(self):
         ## move to spokes

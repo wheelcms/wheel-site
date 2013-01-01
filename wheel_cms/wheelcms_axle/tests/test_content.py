@@ -1,5 +1,5 @@
-from wheelcms_axe.models import Node, NodeInUse
-from wheelcms_axe.tests.models import Type1, Type2
+from wheelcms_axle.models import Node, NodeInUse
+from wheelcms_axle.tests.models import Type1, Type2
 
 from django.db import IntegrityError
 from django.utils import timezone

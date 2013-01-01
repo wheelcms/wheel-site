@@ -1,6 +1,6 @@
-from wheelcms_axe.main import MainHandler
-from wheelcms_axe.models import Node
-from wheelcms_axe.tests.models import Type1
+from wheelcms_axle.main import MainHandler
+from wheelcms_axle.models import Node
+from wheelcms_axle.tests.models import Type1
 
 from two.ol.base import NotFound
 import pytest
@@ -58,6 +58,6 @@ class TestMainHandler(object):
         request = create_request("GET", "/", data=dict(type="type1"))
         handler = MainHandlerTestable(request=request, instance=root)
         create = handler.create()
-        assert create['path'] == "wheelcms_axe/create.html"
+        assert create['path'] == "wheelcms_axle/create.html"
         assert 'form' in create['context']
         

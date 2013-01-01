@@ -1,5 +1,5 @@
 from two.ol.base import RESTLikeHandler
-from wheelcms_axe.models import Node, type_registry
+from wheelcms_axle.models import Node, type_registry
 
 class WheelRESTHandler(RESTLikeHandler):
     pass
@@ -74,7 +74,7 @@ class MainHandler(WheelRESTHandler):
         else:
             self.context['form'] = formclass()
         self.context['type'] = self.request.REQUEST['type']
-        return self.template("wheelcms_axe/create.html")
+        return self.template("wheelcms_axle/create.html")
 
     def update(self):
         instance = self.instance
@@ -102,7 +102,7 @@ class MainHandler(WheelRESTHandler):
             self.context['form'] = formclass(parent=parent,
                              initial=dict(slug=slug), instance=instance.content())
 
-        return self.template("wheelcms_axe/update.html")
+        return self.template("wheelcms_axle/update.html")
 
     def view(self):
         """ frontpage / view """
@@ -110,7 +110,7 @@ class MainHandler(WheelRESTHandler):
         # import pdb; pdb.set_trace()
         
         self.context['spoke'] = type_registry.get(self.instance.content().meta_type)(self.instance.content())
-        return self.template("wheelcms_axe/main.html")
+        return self.template("wheelcms_axle/main.html")
 
     def list(self):
         self.instance = Node.root()
