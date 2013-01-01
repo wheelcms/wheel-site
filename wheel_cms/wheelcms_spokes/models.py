@@ -59,6 +59,7 @@ class News(Content):
 ##   name = "spokes.page"
 ##   title = "A simple webpage"
 ##
+## view template, allowed subcontent(-restrictions)
 ## type_registry.register(PageType)
 
 type_registry.register("page", Page, formfactory(Page))

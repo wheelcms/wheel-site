@@ -225,6 +225,15 @@ class ContentBase(models.Model):
         except Node.DoesNotExist:
             return u"Unconnected %s: %s" % (self.meta_type, self.title)
 
+    def view_template(self):
+        ## Move to spoke
+        return "wheelcms_axe/content_view.html"
+
+    def fields(self):
+        ## move to spokes
+        for i in self._meta.fields:
+            yield (i.name, getattr(self, i.name))
+
 WHEEL_CONTENT_BASECLASS = ContentBase
 
 class Content(WHEEL_CONTENT_BASECLASS):

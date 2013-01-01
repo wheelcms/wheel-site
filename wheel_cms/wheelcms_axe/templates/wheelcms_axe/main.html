@@ -2,14 +2,5 @@
 
 
 {% block base_main %}
-<p>
-Path: {{instance.path}}
-Title: {{instance.content.title}}
-Body (page only): {{instance.content.body}}
-<br>
-<b>children</b>
-{% for child in instance.children %}
-<a href="{{child.path}}">{{child.content.title}}</a><br>
-{% endfor %}
-</p>
+{% include instance.content.view_template %}
 {% endblock %}

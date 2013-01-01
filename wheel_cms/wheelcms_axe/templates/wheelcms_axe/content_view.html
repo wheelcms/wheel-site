@@ -1,0 +1,15 @@
+<p>
+generated:
+{% for name, value in instance.content.fields %}
+{{name}}: {{value}}<br>
+{% endfor %}
+===<br>
+Path: {{instance.path}}<br>
+Title: {{instance.content.title}}<br>
+Body (page only): {{instance.content.body}}<br>
+<br>
+<b>children</b>
+<br>
+{% for child in instance.children %}
+<a href="{{child.path}}">{{child.content.title}}</a><br>
+{% endfor %}
