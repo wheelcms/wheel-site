@@ -39,17 +39,21 @@ class MainHandler(WheelRESTHandler):
             required for /create
         """
         d = dict()
-        # import pdb; pdb.set_trace()
 
         parent_path = ""
         if i.get('parent') is not None:
             parent_path = i['parent']
             if parent_path:
                 parent_path = '/' + parent_path
-            d['parent'] = Node.get(parent_path)
+            parent = d['parent'] = Node.get(parent_path)
+            if parent is None:
+                return cls.notfound()
 
         if i.get('instance') is not None:
-            d['instance'] = Node.get(parent_path + '/' + i['instance'])
+            d['instance'] = instance = Node.get(parent_path + '/' + i['instance'])
+
+            if instance is None:
+                return cls.notfound()
         return d
 
     def create(self, *a, **b):
@@ -95,8 +99,9 @@ class MainHandler(WheelRESTHandler):
 
                 return self.redirect(instance.path, success="Updated")
         else:
-            self.context['form'] = formclass(parent=parent, initial=dict(slug=slug), instance=instance.content())
-        
+            self.context['form'] = formclass(parent=parent,
+                             initial=dict(slug=slug), instance=instance.content())
+
         return self.template("wheelcms_axe/update.html")
 
     def view(self):

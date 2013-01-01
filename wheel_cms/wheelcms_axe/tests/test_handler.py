@@ -2,6 +2,9 @@ from wheelcms_axe.main import MainHandler
 from wheelcms_axe.models import Node
 from wheelcms_axe.tests.models import Type1
 
+from two.ol.base import NotFound
+import pytest
+
 from twotest.util import create_request
 
 class MainHandlerTestable(MainHandler):
@@ -39,6 +42,14 @@ class TestMainHandler(object):
         assert 'parent' in res
         assert res['instance'] == b
         assert res['parent'] == a
+
+    def test_coerce_instance_notfound(self, client):
+        """ coerce a non-existing path for instance """
+        pytest.raises(NotFound, MainHandler.coerce, dict(instance="a"))
+
+    def test_coerce_parent_notfound(self, client):
+        """ coerce a non-existing path for parent """
+        pytest.raises(NotFound, MainHandler.coerce, dict(parent="a"))
 
     def test_create_get_root(self, client):
         """ test create on root - get """
