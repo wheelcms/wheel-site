@@ -1,13 +1,8 @@
 <p>
-generated:
-{% for name, value in instance.content.fields %}
+<b>type info</b><br>
+{% for name, value in spoke.fields %}
 {{name}}: {{value}}<br>
 {% endfor %}
-===<br>
-Path: {{instance.path}}<br>
-Title: {{instance.content.title}}<br>
-Body (page only): {{instance.content.body}}<br>
-<br>
 <b>children</b>
 <br>
 {% for child in instance.children %}

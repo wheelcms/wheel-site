@@ -57,7 +57,6 @@ class TestMainHandler(object):
         Type1(node=root).save()
         request = create_request("GET", "/", data=dict(type="type1"))
         handler = MainHandlerTestable(request=request, instance=root)
-        # import pytest; pytest.set_trace()
         create = handler.create()
         assert create['path'] == "wheelcms_axe/create.html"
         assert 'form' in create['context']

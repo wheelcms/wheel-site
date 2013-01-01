@@ -3,6 +3,8 @@ from django import forms
 from wheelcms_axe.models import Content, Node
 from wheelcms_axe.models import type_registry
 
+from two.ol.util import classproperty
+
 class BaseForm(forms.ModelForm):
     class Meta:
         exclude = ["node", "meta_type"]
@@ -41,26 +43,52 @@ def formfactory(type):
     return Form
 
 
+class Spoke(object):
+    model = Content
+
+    def __init__(self, o):
+        self.o = o
+
+    @classproperty
+    def form(cls):
+        return formfactory(cls.model)
+
+    @classmethod
+    def name(cls):
+        """ This needs namespacing. But a model determines its name based
+            on the classname and doesn't know about namespaces or packages """
+        # import pytest; pytest.set_trace()
+        # return cls.model.__class__.__name__.lower()
+        return cls.model._meta.object_name.lower()  ## app_label
+
+    def view_template(self):
+        return "wheelcms_axe/content_view.html"
+
+    def fields(self):
+        ## move to spokes
+        for i in self.o._meta.fields:
+            yield (i.name, getattr(self.o, i.name))
+    ## allowed subchildren, if any, can be dynamic
+
 class Page(Content):
     """ A simple page object """
     body = models.TextField(blank=False)
+
+class PageType(Spoke):
+    model = Page
+
+    title = "A simple HTML page"
 
 class News(Content):
     """ A news object """
     intro = models.TextField(blank=False)
     body = models.TextField(blank=False)
 
-##
-## Idee: combineer Model, Form en type-metadata in een aparte class,
-## e.g.
-## class PageType(..):
-##   model = Page
-##   form = formfactory(..)
-##   name = "spokes.page"
-##   title = "A simple webpage"
-##
-## view template, allowed subcontent(-restrictions)
-## type_registry.register(PageType)
+class NewsType(Spoke):
+    model = News
 
-type_registry.register("page", Page, formfactory(Page))
-type_registry.register("news", News, formfactory(News))
+    title = "A simple News item"
+
+
+type_registry.register(PageType)
+type_registry.register(NewsType)

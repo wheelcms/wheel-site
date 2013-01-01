@@ -221,18 +221,10 @@ class ContentBase(models.Model):
 
     def __unicode__(self):
         try:
-            return u"%s connected to node %s: %s" % (self.meta_type, self.node, self.title)
+            return u"%s connected to node %s: %s" % \
+                    (self.meta_type, self.node, self.title)
         except Node.DoesNotExist:
             return u"Unconnected %s: %s" % (self.meta_type, self.title)
-
-    def view_template(self):
-        ## Move to spoke
-        return "wheelcms_axe/content_view.html"
-
-    def fields(self):
-        ## move to spokes
-        for i in self._meta.fields:
-            yield (i.name, getattr(self, i.name))
 
 WHEEL_CONTENT_BASECLASS = ContentBase
 
@@ -241,7 +233,7 @@ class Content(WHEEL_CONTENT_BASECLASS):
 
 
 class TypeRegistry(dict):
-    def register(self, name, model, form):
-        self[name] = dict(model=model, form=form)
+    def register(self, t):
+        self[t.name()] = t
 
 type_registry = TypeRegistry()

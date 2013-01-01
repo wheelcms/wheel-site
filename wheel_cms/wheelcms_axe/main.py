@@ -25,7 +25,7 @@ class MainHandler(WheelRESTHandler):
 
         typeinfo = type_registry.get(type)
         parent = self.instance.parent()
-        return typeinfo['form'](parent=parent, data=data, instance=instance)
+        return typeinfo.form(parent=parent, data=data, instance=instance)
 
     @classmethod
     def coerce(cls, i):
@@ -58,7 +58,7 @@ class MainHandler(WheelRESTHandler):
 
     def create(self, *a, **b):
         type = self.request.REQUEST.get('type')
-        formclass = type_registry.get(type)['form']
+        formclass = type_registry.get(type).form
 
         parent = self.parent
 
@@ -82,7 +82,7 @@ class MainHandler(WheelRESTHandler):
 
         type = instance.content().meta_type
         typeinfo = type_registry.get(type)
-        formclass =  typeinfo['form']
+        formclass =  typeinfo.form
         slug = instance.slug()
 
         if self.post:
@@ -107,6 +107,9 @@ class MainHandler(WheelRESTHandler):
     def view(self):
         """ frontpage / view """
         self.context['instance'] = self.instance
+        # import pdb; pdb.set_trace()
+        
+        self.context['spoke'] = type_registry.get(self.instance.content().meta_type)(self.instance.content())
         return self.template("wheelcms_axe/main.html")
 
     def list(self):
