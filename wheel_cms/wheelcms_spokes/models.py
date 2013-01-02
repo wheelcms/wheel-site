@@ -67,6 +67,11 @@ class Spoke(object):
         # return cls.model.__class__.__name__.lower()
         return cls.model._meta.object_name.lower()  ## app_label
 
+    @classmethod
+    def title(cls):
+        """ a default title """
+        return cls.model._meta.object_name + " content"
+
     def view_template(self):
         return "wheelcms_axle/content_view.html"
 
