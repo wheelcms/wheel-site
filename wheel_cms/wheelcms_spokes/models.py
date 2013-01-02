@@ -11,7 +11,7 @@ class BaseForm(forms.ModelForm):
 
     slug = forms.Field(required=True)
 
-    def __init__(self, parent=None, *args, **kwargs):
+    def __init__(self, parent=None, attach=False, *args, **kwargs):
         """
             Django will put the extra slug field at the bottom, below
             all model fields. I want it just after the title field
@@ -21,8 +21,14 @@ class BaseForm(forms.ModelForm):
         titlepos = self.fields.keyOrder.index('title')
         self.fields.insert(titlepos+1, 'slug', slug)
         self.parent = parent
+        self.attach = attach
+        if attach:
+            self.fields.pop('slug')
 
     def clean_slug(self):
+        if self.attach:
+            return
+
         slug = self.data.get('slug', '').strip().lower()
         if not Node.validpathre.match(slug):
             raise forms.ValidationError("Only numbers, letters, _-")
