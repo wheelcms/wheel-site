@@ -25,6 +25,10 @@ class BaseForm(forms.ModelForm):
         if attach:
             self.fields.pop('slug')
 
+        # import pdb; pdb.set_trace()
+        templates = template_registry.get(self._meta.model, [])
+        self.fields['template'] = forms.ChoiceField(choices=templates, required=False)
+
     def clean_slug(self):
         if self.attach:
             return
@@ -40,6 +44,16 @@ class BaseForm(forms.ModelForm):
             pass
 
         return slug
+
+    def clean_template(self):
+        template = self.data.get('template')
+        if not template:
+            return ""
+
+        if not template_registry.valid_for_model(self._meta.model, template):
+            raise forms.ValidationError("Invalid template")
+        return template
+
 
 def formfactory(type):
     class Form(BaseForm):
@@ -73,7 +87,14 @@ class Spoke(object):
         return cls.model._meta.object_name + " content"
 
     def view_template(self):
-        return "wheelcms_axle/content_view.html"
+        if not self.o.template or \
+           not template_registry.valid_for_model(self.model, self.o.template):
+            default = template_registry.defaults.get(self.model)
+            if not default:
+                return "wheelcms_axle/content_view.html"
+            return default
+
+        return self.o.template
 
     def fields(self):
         ## move to spokes
@@ -90,9 +111,6 @@ class PageType(Spoke):
 
     title = "A simple HTML page"
 
-    def view_template(self):
-        return "wheelcms_spokes/page_view.html"
-
 
 class News(Content):
     """ A news object """
@@ -104,8 +122,29 @@ class NewsType(Spoke):
 
     title = "A simple News item"
 
-    def view_template(self):
-        return "wheelcms_spokes/news_view.html"
 
 type_registry.register(PageType)
 type_registry.register(NewsType)
+
+class TemplateRegistry(dict):
+    def __init__(self, *arg, **kw):
+        super(TemplateRegistry, self).__init__(*arg, **kw)
+        self.defaults = {}
+
+    def valid_for_model(self, model, template):
+        return template in dict(self.get(model, []))
+
+    def register(self, spoke, template, title, default=False):
+        if spoke.model not in self:
+            self[spoke.model] = []
+
+        self[spoke.model].append((template, title))
+
+        if default:
+            self.defaults[spoke.model] = template
+
+template_registry = TemplateRegistry()
+
+template_registry.register(PageType, "wheelcms_spokes/page_view.html", "Basic Page view", default=True)
+template_registry.register(PageType, "wheelcms_spokes/page_view_frontpage.html", "Frontpage Page view")
+template_registry.register(NewsType, "wheelcms_spokes/news_view.html", "Basic News view", default=True)
