@@ -90,6 +90,10 @@ class PageType(Spoke):
 
     title = "A simple HTML page"
 
+    def view_template(self):
+        return "wheelcms_spokes/page_view.html"
+
+
 class News(Content):
     """ A news object """
     intro = models.TextField(blank=False)
@@ -100,6 +104,8 @@ class NewsType(Spoke):
 
     title = "A simple News item"
 
+    def view_template(self):
+        return "wheelcms_spokes/news_view.html"
 
 type_registry.register(PageType)
 type_registry.register(NewsType)
