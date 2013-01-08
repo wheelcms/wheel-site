@@ -171,6 +171,7 @@ class ImageType(Spoke):
 
     title = "An image"
 
+template_registry.register(ImageType, "wheelcms_spokes/image_view.html", "Basic Image view", default=True)
 type_registry.register(ImageType)
 
 class File(Content):
@@ -183,4 +184,5 @@ class FileType(Spoke):
 
     title = "A file"
 
+template_registry.register(FileType, "wheelcms_spokes/file_view.html", "Basic News view", default=True)
 type_registry.register(FileType)
