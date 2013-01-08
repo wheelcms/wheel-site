@@ -1,8 +1,10 @@
 from django.contrib import admin
 from wheelcms_spokes import models
+from wheelcms_axle.models import type_registry
 
-class PageAdmin(admin.ModelAdmin):
-    model = models.Page
+## create an admin for all registered types
 
-
-admin.site.register(models.Page, PageAdmin)
+for spoke in type_registry.values():
+    class SpokeAdmin(admin.ModelAdmin):
+        model = spoke.model
+    admin.site.register(spoke.model, SpokeAdmin)

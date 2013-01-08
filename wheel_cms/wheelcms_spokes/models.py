@@ -102,29 +102,6 @@ class Spoke(object):
             yield (i.name, getattr(self.o, i.name))
     ## allowed subchildren, if any, can be dynamic
 
-class Page(Content):
-    """ A simple page object """
-    body = models.TextField(blank=False)
-
-class PageType(Spoke):
-    model = Page
-
-    title = "A simple HTML page"
-
-
-class News(Content):
-    """ A news object """
-    intro = models.TextField(blank=False)
-    body = models.TextField(blank=False)
-
-class NewsType(Spoke):
-    model = News
-
-    title = "A simple News item"
-
-
-type_registry.register(PageType)
-type_registry.register(NewsType)
 
 class TemplateRegistry(dict):
     def __init__(self, *arg, **kw):
@@ -145,6 +122,58 @@ class TemplateRegistry(dict):
 
 template_registry = TemplateRegistry()
 
+class Page(Content):
+    """ A simple page object """
+    body = models.TextField(blank=False)
+
+
+class PageType(Spoke):
+    model = Page
+
+    title = "A simple HTML page"
+
+
+type_registry.register(PageType)
 template_registry.register(PageType, "wheelcms_spokes/page_view.html", "Basic Page view", default=True)
 template_registry.register(PageType, "wheelcms_spokes/page_view_frontpage.html", "Frontpage Page view")
+
+
+class News(Content):
+    """ A news object """
+    intro = models.TextField(blank=False)
+    body = models.TextField(blank=False)
+
+
+class NewsType(Spoke):
+    model = News
+
+    title = "A simple News item"
+
+
 template_registry.register(NewsType, "wheelcms_spokes/news_view.html", "Basic News view", default=True)
+type_registry.register(NewsType)
+
+
+class Image(Content):
+    """ Holds an image.  """
+    ## cannot be named image - that's used for the content base relation
+    storage = models.ImageField(upload_to="images", blank=False)
+
+class ImageType(Spoke):
+    model = Image
+
+    title = "An image"
+
+type_registry.register(ImageType)
+
+class File(Content):
+    """ Holds a file """
+    ## cannot be named file - that's used for the content base relation
+    storage = models.FileField(upload_to="files", blank=False)
+
+class FileType(Spoke):
+    model = File
+
+    title = "A file"
+
+type_registry.register(FileType)
