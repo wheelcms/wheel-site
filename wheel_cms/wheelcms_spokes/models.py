@@ -25,9 +25,11 @@ class BaseForm(forms.ModelForm):
         if attach:
             self.fields.pop('slug')
 
-        # import pdb; pdb.set_trace()
         templates = template_registry.get(self._meta.model, [])
-        self.fields['template'] = forms.ChoiceField(choices=templates, required=False)
+        if templates:
+            self.fields['template'] = forms.ChoiceField(choices=templates, required=False)
+        else:
+            self.fields.pop('template')  ## will default to content_view
 
     def clean_slug(self):
         if self.attach:

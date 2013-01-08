@@ -50,7 +50,7 @@ class TestSpokeTemplate(object):
     def test_empty(self, client):
         """ An empty registry """
         form = Type1Type.form()
-        assert form.fields['template'].choices == []
+        assert 'template' not in form.fields
         type1 = Type1()
         type1.save()
         assert Type1Type(type1).view_template() == DEFAULT
