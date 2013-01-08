@@ -92,9 +92,14 @@ class Spoke(object):
         if not self.o.template or \
            not template_registry.valid_for_model(self.model, self.o.template):
             default = template_registry.defaults.get(self.model)
-            if not default:
-                return "wheelcms_axle/content_view.html"
-            return default
+            if default:
+                return default
+
+            all = template_registry.get(self.model, [])
+            if len(all) == 1:
+                return all[0][0]
+
+            return "wheelcms_axle/content_view.html"
 
         return self.o.template
 

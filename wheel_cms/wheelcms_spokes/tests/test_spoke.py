@@ -55,6 +55,16 @@ class TestSpokeTemplate(object):
         type1.save()
         assert Type1Type(type1).view_template() == DEFAULT
 
+    def test_single(self, client):
+        """ An single template registered """
+        self.reg.register(Type1Type, "foo/bar", "foo bar", default=False)
+        form = Type1Type.form()
+        assert 'template' in form.fields
+        assert form.fields['template'].choices == [('foo/bar', 'foo bar')]
+        type1 = Type1()
+        type1.save()
+        assert Type1Type(type1).view_template() == 'foo/bar'
+
     def test_default(self, client):
         """ If there's a default, it should be used """
         type1 = Type1()
