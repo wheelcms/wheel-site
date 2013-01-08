@@ -1,6 +1,6 @@
 DEFAULT_DB = {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'stracksite.db'
+        'NAME': 'wheel.db'
 }
 TEST_DB = {
         'ENGINE': 'django.db.backends.sqlite3',
