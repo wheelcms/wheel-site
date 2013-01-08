@@ -68,6 +68,8 @@ def formfactory(type):
 class Spoke(object):
     model = Content
 
+    children = None  ## None means no restrictions, () means no subcontent allowed
+
     def __init__(self, o):
         self.o = o
 
@@ -170,6 +172,7 @@ class ImageType(Spoke):
     model = Image
 
     title = "An image"
+    children = ()
 
 template_registry.register(ImageType, "wheelcms_spokes/image_view.html", "Basic Image view", default=True)
 type_registry.register(ImageType)
@@ -183,6 +186,7 @@ class FileType(Spoke):
     model = File
 
     title = "A file"
+    children = ()
 
 template_registry.register(FileType, "wheelcms_spokes/file_view.html", "Basic News view", default=True)
 type_registry.register(FileType)
