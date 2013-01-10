@@ -2,6 +2,7 @@ from django.db import models
 from django import forms
 from wheelcms_axle.models import Content, Node
 from wheelcms_axle.models import type_registry
+from wheelcms_axle.workflows.default import DefaultWorkflow
 
 from two.ol.util import classproperty
 
@@ -30,6 +31,25 @@ class BaseForm(forms.ModelForm):
             self.fields['template'] = forms.ChoiceField(choices=templates, required=False)
         else:
             self.fields.pop('template')  ## will default to content_view
+
+        self.fields['state'] = forms.ChoiceField(choices=self.workflow_choices(),
+                                                 initial=self.workflow_default(),
+                                                 required=False)
+
+    def workflow_choices(self):
+        """
+            return valid choices. Is actually context dependend (not all states
+            can be reached from a given state)
+        """
+        spoke = type_registry.get(self._meta.model.get_name())
+        return spoke.workflowclass.states
+
+    def workflow_default(self):
+        """
+            Return default state for active workflow
+        """
+        spoke = type_registry.get(self._meta.model.get_name())
+        return spoke.workflowclass.default
 
     def clean_slug(self):
         if self.attach:
@@ -67,11 +87,13 @@ def formfactory(type):
 
 class Spoke(object):
     model = Content
+    workflowclass = DefaultWorkflow
 
     children = None  ## None means no restrictions, () means no subcontent allowed
 
     def __init__(self, o):
         self.o = o
+        self.instance = o  ## keep self.o for backward compat
 
     @classproperty
     def form(cls):
@@ -83,12 +105,15 @@ class Spoke(object):
             on the classname and doesn't know about namespaces or packages """
         # import pytest; pytest.set_trace()
         # return cls.model.__class__.__name__.lower()
-        return cls.model._meta.object_name.lower()  ## app_label
+        return cls.model.get_name()  ## app_label
 
     @classmethod
     def title(cls):
         """ a default title """
         return cls.model._meta.object_name + " content"
+
+    def workflow(self):
+        return self.workflowclass(self)
 
     def view_template(self):
         if not self.o.template or \
