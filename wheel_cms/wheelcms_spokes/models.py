@@ -8,7 +8,7 @@ from two.ol.util import classproperty
 
 class BaseForm(forms.ModelForm):
     class Meta:
-        exclude = ["node", "meta_type"]
+        exclude = ["node", "meta_type", "owner"]
 
     slug = forms.Field(required=True)
 
@@ -79,9 +79,9 @@ class BaseForm(forms.ModelForm):
 
 def formfactory(type):
     class Form(BaseForm):
-        class Meta:
+        class Meta(BaseForm.Meta):
             model = type
-            exclude = ["node", "meta_type", "created", "modified"]
+            exclude = BaseForm.Meta.exclude + ["created", "modified"]
     return Form
 
 
