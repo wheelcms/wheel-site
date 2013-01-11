@@ -35,6 +35,8 @@ class BaseForm(forms.ModelForm):
         self.fields['state'] = forms.ChoiceField(choices=self.workflow_choices(),
                                                  initial=self.workflow_default(),
                                                  required=False)
+        if self.instance and self.instance.node and self.instance.node.isroot():
+            self.fields.pop("slug")
 
     def workflow_choices(self):
         """
