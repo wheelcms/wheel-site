@@ -105,8 +105,6 @@ class Spoke(object):
     def name(cls):
         """ This needs namespacing. But a model determines its name based
             on the classname and doesn't know about namespaces or packages """
-        # import pytest; pytest.set_trace()
-        # return cls.model.__class__.__name__.lower()
         return cls.model.get_name()  ## app_label
 
     @classmethod
