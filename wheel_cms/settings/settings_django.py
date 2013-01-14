@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
 
+
     'wheelcms_axle',
     'wheelcms_spokes',
 
@@ -39,6 +40,8 @@ INSTALLED_APPS = (
     'two.ol',
     'two.bootstrap',
     'twotest',
+
+    'userena',
 
 
 )
