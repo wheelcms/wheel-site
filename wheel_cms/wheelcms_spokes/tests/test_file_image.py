@@ -1,10 +1,16 @@
+"""
+    test file/image based on spoke base tests
+"""
+
 from wheelcms_spokes.tests.test_spoke import BaseCombinedSpokeTest
 from wheelcms_spokes.models import ImageType, FileType
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from StringIO import StringIO
 
 class BaseImageFileTest(BaseCombinedSpokeTest):
+    """
+        Shared customization/tests
+    """
     def valid_files(self):
         """ return an image, will work for both file and image uploads """
         return dict(storage=SimpleUploadedFile("foo.png", 
@@ -18,10 +24,16 @@ class BaseImageFileTest(BaseCombinedSpokeTest):
 
 
 class TestImageSpoke(BaseImageFileTest):
+    """
+        Test the image spoke
+    """
     type = ImageType
     typename = "image"
 
 
 class TestFileSpoke(BaseImageFileTest):
+    """
+        Test the file spoke
+    """
     type = FileType
     typename = "file"
