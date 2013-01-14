@@ -2,10 +2,9 @@
     Test spoke related code / forms / behaviour
 """
 
-from wheelcms_axle.models import Node
+from wheelcms_axle.models import Node, TypeRegistry, type_registry
 from wheelcms_spokes.models import TemplateRegistry
 import wheelcms_spokes.models
-from wheelcms_axle.tests.models import Type1
 from wheelcms_axle.tests.models import Type1Type
 
 DEFAULT = "wheelcms_axle/content_view.html"
@@ -16,6 +15,12 @@ class BaseSpokeTest(object):
     """
     type = None
     typename = None
+
+    def setup(self):
+        """ override the global registry """
+        self.registry = TypeRegistry()
+        type_registry.set(self.registry)
+        self.registry.register(self.type)
 
     def test_name(self, client):
         """
@@ -55,9 +60,13 @@ class BaseSpokeTemplateTest(object):
         return {}
 
     def setup(self):
-        """ create a clean local registry, make sure it's used globally """
+        """ create clean local registries, make sure it's used globally """
         self.reg = TemplateRegistry()
         wheelcms_spokes.models.template_registry = self.reg
+
+        self.registry = TypeRegistry()
+        type_registry.set(self.registry)
+        self.registry.register(self.type)
 
     def test_empty(self, client):
         """ An empty registry """
@@ -118,10 +127,8 @@ class BaseSpokeTemplateTest(object):
         assert form.is_valid()
         assert form.data['template'] == "foo/bar3"
 
-class BaseCombinedSpokeTest(BaseSpokeTest, BaseSpokeTemplateTest):
-    pass
 
-class TestType1Spoke(BaseCombinedSpokeTest):
+class TestType1Spoke(BaseSpokeTest):
     """
         Run base tests on test type 'type1'
     """
@@ -133,3 +140,10 @@ class TestType1Spoke(BaseCombinedSpokeTest):
         fields = super(TestType1Spoke, self).test_fields(client)
         assert 't1field' in fields
 
+
+class TestType1SpokeTemplate(BaseSpokeTemplateTest):
+    """
+        Run base template tests on test type 'type1'
+    """
+    type = Type1Type
+    typename = "type1"

@@ -2,12 +2,12 @@
     test file/image based on spoke base tests
 """
 
-from wheelcms_spokes.tests.test_spoke import BaseCombinedSpokeTest
+from wheelcms_spokes.tests.test_spoke import BaseSpokeTemplateTest, BaseSpokeTest
 from wheelcms_spokes.models import ImageType, FileType
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
-class BaseImageFileTest(BaseCombinedSpokeTest):
+class BaseImageFileTest(BaseSpokeTemplateTest):
     """
         Shared customization/tests
     """
@@ -23,7 +23,7 @@ class BaseImageFileTest(BaseCombinedSpokeTest):
         assert len(self.type.children) == 0
 
 
-class TestImageSpoke(BaseImageFileTest):
+class TestImageSpokeTemplate(BaseImageFileTest):
     """
         Test the image spoke
     """
@@ -31,7 +31,23 @@ class TestImageSpoke(BaseImageFileTest):
     typename = "image"
 
 
-class TestFileSpoke(BaseImageFileTest):
+class TestImageSpoke(BaseSpokeTest):
+    """
+        Test the image spoke
+    """
+    type = ImageType
+    typename = "image"
+
+
+class TestFileSpokeTemplate(BaseImageFileTest):
+    """
+        Test the file spoke
+    """
+    type = FileType
+    typename = "file"
+
+
+class TestFileSpoke(BaseSpokeTest):
     """
         Test the file spoke
     """
