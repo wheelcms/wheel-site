@@ -28,7 +28,8 @@ class BaseForm(forms.ModelForm):
 
         templates = template_registry.get(self._meta.model, [])
         if templates:
-            self.fields['template'] = forms.ChoiceField(choices=templates, required=False)
+            self.fields['template'] = forms.ChoiceField(choices=templates,
+                                                        required=False)
         else:
             self.fields.pop('template')  ## will default to content_view
 
@@ -61,7 +62,8 @@ class BaseForm(forms.ModelForm):
         if not Node.validpathre.match(slug):
             raise forms.ValidationError("Only numbers, letters, _-")
         try:
-            existing = Node.objects.filter(path=self.parent.path + "/" + slug).get()
+            existing = Node.objects.filter(path=self.parent.path + "/" + slug
+                                          ).get()
             if existing != self.instance.node:
                 raise forms.ValidationError("Name in use")
         except Node.DoesNotExist:
@@ -91,7 +93,8 @@ class Spoke(object):
     model = Content
     workflowclass = DefaultWorkflow
 
-    children = None  ## None means no restrictions, () means no subcontent allowed
+    ## None means no restrictions, () means no subcontent allowed
+    children = None 
 
     def __init__(self, o):
         self.o = o
@@ -131,10 +134,9 @@ class Spoke(object):
         return self.o.template
 
     def fields(self):
-        ## move to spokes
+        """ iterate over fields in model """
         for i in self.o._meta.fields:
             yield (i.name, getattr(self.o, i.name))
-    ## allowed subchildren, if any, can be dynamic
 
 
 class TemplateRegistry(dict):
