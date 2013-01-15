@@ -1,9 +1,9 @@
 from django.db import models
 from django import forms
 from wheelcms_axle.models import Content, Node
-from wheelcms_axle.models import type_registry
 from wheelcms_axle.workflows.default import DefaultWorkflow
 
+from wheelcms_axle.models import type_registry
 from wheelcms_spokes.templates import template_registry
 
 from two.ol.util import classproperty
@@ -140,63 +140,8 @@ class Spoke(object):
         for i in self.o._meta.fields:
             yield (i.name, getattr(self.o, i.name))
 
+import wheelcms_spokes.page
+import wheelcms_spokes.news
+import wheelcms_spokes.image
+import wheelcms_spokes.file
 
-class Page(Content):
-    """ A simple page object """
-    body = models.TextField(blank=False)
-
-
-class PageType(Spoke):
-    model = Page
-
-    title = "A simple HTML page"
-
-
-type_registry.register(PageType)
-template_registry.register(PageType, "wheelcms_spokes/page_view.html", "Basic Page view", default=True)
-template_registry.register(PageType, "wheelcms_spokes/page_view_frontpage.html", "Frontpage Page view")
-
-
-class News(Content):
-    """ A news object """
-    intro = models.TextField(blank=False)
-    body = models.TextField(blank=False)
-
-
-class NewsType(Spoke):
-    model = News
-
-    title = "A simple News item"
-
-
-template_registry.register(NewsType, "wheelcms_spokes/news_view.html", "Basic News view", default=True)
-type_registry.register(NewsType)
-
-
-class Image(Content):
-    """ Holds an image.  """
-    ## cannot be named image - that's used for the content base relation
-    storage = models.ImageField(upload_to="images", blank=False)
-
-class ImageType(Spoke):
-    model = Image
-
-    title = "An image"
-    children = ()
-
-template_registry.register(ImageType, "wheelcms_spokes/image_view.html", "Basic Image view", default=True)
-type_registry.register(ImageType)
-
-class File(Content):
-    """ Holds a file """
-    ## cannot be named file - that's used for the content base relation
-    storage = models.FileField(upload_to="files", blank=False)
-
-class FileType(Spoke):
-    model = File
-
-    title = "A file"
-    children = ()
-
-template_registry.register(FileType, "wheelcms_spokes/file_view.html", "Basic News view", default=True)
-type_registry.register(FileType)

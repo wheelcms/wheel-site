@@ -2,7 +2,7 @@
     type specific test based on spoke base tests
 """
 from wheelcms_spokes.tests.test_spoke import BaseSpokeTest, BaseSpokeTemplateTest
-from wheelcms_spokes.models import NewsType
+from wheelcms_spokes.news import NewsType
 
 
 class TestNewsSpokeTemplate(BaseSpokeTemplateTest):

@@ -3,7 +3,8 @@
 """
 
 from wheelcms_spokes.tests.test_spoke import BaseSpokeTemplateTest, BaseSpokeTest
-from wheelcms_spokes.models import ImageType, FileType
+from wheelcms_spokes.file import FileType
+from wheelcms_spokes.image import ImageType
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
