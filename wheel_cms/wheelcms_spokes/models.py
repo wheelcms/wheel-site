@@ -4,6 +4,8 @@ from wheelcms_axle.models import Content, Node
 from wheelcms_axle.models import type_registry
 from wheelcms_axle.workflows.default import DefaultWorkflow
 
+from wheelcms_spokes.templates import template_registry
+
 from two.ol.util import classproperty
 
 class BaseForm(forms.ModelForm):
@@ -138,25 +140,6 @@ class Spoke(object):
         for i in self.o._meta.fields:
             yield (i.name, getattr(self.o, i.name))
 
-
-class TemplateRegistry(dict):
-    def __init__(self, *arg, **kw):
-        super(TemplateRegistry, self).__init__(*arg, **kw)
-        self.defaults = {}
-
-    def valid_for_model(self, model, template):
-        return template in dict(self.get(model, []))
-
-    def register(self, spoke, template, title, default=False):
-        if spoke.model not in self:
-            self[spoke.model] = []
-
-        self[spoke.model].append((template, title))
-
-        if default:
-            self.defaults[spoke.model] = template
-
-template_registry = TemplateRegistry()
 
 class Page(Content):
     """ A simple page object """

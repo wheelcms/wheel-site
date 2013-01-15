@@ -1,7 +1,7 @@
 """
     Test the standalone template registry
 """
-from wheelcms_spokes.models import TemplateRegistry
+from wheelcms_spokes.templates import TemplateRegistry
 from wheelcms_axle.tests.models import Type1
 from wheelcms_axle.tests.models import Type1Type, Type2Type
 

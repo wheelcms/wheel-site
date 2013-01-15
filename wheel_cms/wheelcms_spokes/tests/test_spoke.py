@@ -3,8 +3,8 @@
 """
 
 from wheelcms_axle.models import Node, TypeRegistry, type_registry
-from wheelcms_spokes.models import TemplateRegistry
-import wheelcms_spokes.models
+from wheelcms_spokes.templates import TemplateRegistry
+import wheelcms_spokes.templates
 from wheelcms_axle.tests.models import Type1Type
 
 DEFAULT = "wheelcms_axle/content_view.html"
@@ -62,7 +62,7 @@ class BaseSpokeTemplateTest(object):
     def setup(self):
         """ create clean local registries, make sure it's used globally """
         self.reg = TemplateRegistry()
-        wheelcms_spokes.models.template_registry = self.reg
+        wheelcms_spokes.templates.template_registry.set(self.reg)
 
         self.registry = TypeRegistry()
         type_registry.set(self.registry)
