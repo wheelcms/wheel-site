@@ -16,3 +16,8 @@ USERENA_SIGNIN_REDIRECT_URL = "/"
 USERENA_ACTIVATION_REQUIRED = True
 
 USERENA_FORBIDDEN_USERNAMES = ('signup', 'signout', 'signin', 'activate', 'me', 'password', 'www', 'wheel', 'root', 'support')
+
+## guardian config
+
+GUARDIAN_RAISE_403 = True
+
