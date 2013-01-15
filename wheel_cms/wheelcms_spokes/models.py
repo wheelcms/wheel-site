@@ -96,7 +96,7 @@ class Spoke(object):
     workflowclass = DefaultWorkflow
 
     ## None means no restrictions, () means no subcontent allowed
-    children = None 
+    children = None
 
     def __init__(self, o):
         self.o = o
