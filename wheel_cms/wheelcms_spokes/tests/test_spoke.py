@@ -147,3 +147,75 @@ class TestType1SpokeTemplate(BaseSpokeTemplateTest):
     """
     type = Type1Type
     typename = "type1"
+
+from wheelcms_spokes.models import Spoke
+
+class ModellessSpoke(Spoke):
+    """
+        Handle the absence of a model
+    """
+    @classmethod
+    def name(cls):
+        return cls.__name__.lower()
+
+class TestImplicitAddition(object):
+    """
+        Test implicit/explicit addition of children
+    """
+    def setup(self):
+        """ local registry, install it globally """
+        self.registry = TypeRegistry()
+        type_registry.set(self.registry)
+
+    def test_explicit(self, client):
+        """ Simple case, no restrictions """
+        class T1(ModellessSpoke):
+            implicit_add = True  ## default
+
+        class T2(ModellessSpoke):
+            children = None
+
+        self.registry.register(T1)
+        self.registry.register(T2)
+
+        assert T1 in T2.addable_children()
+
+    def test_non_implicit(self, client):
+        """ T1 cannot be added explicitly """
+        class T1(ModellessSpoke):
+            implicit_add = False
+
+        class T2(ModellessSpoke):
+            children = None
+
+        self.registry.register(T1)
+        self.registry.register(T2)
+
+        assert T1 not in T2.addable_children()
+
+    def test_non_implicit_but_children(self, client):
+        """ T1 cannot be added explicitly but is in T2's children """
+        class T1(ModellessSpoke):
+            implicit_add = False
+
+        class T2(ModellessSpoke):
+            children = (T1, )
+
+        self.registry.register(T1)
+        self.registry.register(T2)
+
+        assert T1 in T2.addable_children()
+
+    def test_non_implicit_but_exp_children(self, client):
+        """ T1 cannot be added explicitly but is in T2's explicit
+            children """
+        class T1(ModellessSpoke):
+            implicit_add = False
+
+        class T2(ModellessSpoke):
+            explicit_children = (T1, )
+
+        self.registry.register(T1)
+        self.registry.register(T2)
+
+        assert T1 in T2.addable_children()

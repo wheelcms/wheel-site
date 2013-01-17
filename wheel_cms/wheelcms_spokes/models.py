@@ -92,11 +92,17 @@ def formfactory(type):
 
 
 class Spoke(object):
-    model = Content
+    model = Content  ## is it smart to set this to Content? A nonsensible default..
     workflowclass = DefaultWorkflow
 
     ## None means no restrictions, () means no subcontent allowed
     children = None
+
+    ## can it be implicitly added?
+    implicit_add = True
+
+    ## explicit children - explicit children that can be added
+    explicit_children = None
 
     def __init__(self, o):
         self.o = o
@@ -139,6 +145,23 @@ class Spoke(object):
         """ iterate over fields in model """
         for i in self.o._meta.fields:
             yield (i.name, getattr(self.o, i.name))
+
+    @classmethod
+    def addable_children(cls):
+        """ return spokes that can be added as children """
+        def addable(t):
+            """ check it it's addable, implicitly or explicitly """
+            if t.implicit_add:
+                return True
+            explicit = set(cls.children or ()) | set(cls.explicit_children or ())
+            return t in explicit
+
+        if cls.children is None:
+            ch = [t for t in type_registry.values() if addable(t)]
+        else:
+            ch = cls.children
+
+        return ch
 
 import wheelcms_spokes.page
 import wheelcms_spokes.news
