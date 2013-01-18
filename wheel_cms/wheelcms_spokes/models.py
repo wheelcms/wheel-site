@@ -10,7 +10,7 @@ from two.ol.util import classproperty
 
 class BaseForm(forms.ModelForm):
     class Meta:
-        exclude = ["node", "meta_type", "owner"]
+        exclude = ["node", "meta_type", "owner", "classes"]
 
     slug = forms.Field(required=True)
 
