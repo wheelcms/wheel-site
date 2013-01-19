@@ -5,7 +5,8 @@ from settings_django import *
 from settings_logging import *
 # from settings_mail import *
 from settings_database import *
-from settings_userena import *
+
+from wheelcms_axle.settings import *
 
 try:
     from local_settings import *
@@ -25,3 +26,4 @@ if 'ptest' in sys.argv or 'test' in sys.argv:
 ## verify required stuff has been set
 if not SECRET_KEY:
     raise RuntimeError("Configure the SECRET_KEY in settings_django")
+
