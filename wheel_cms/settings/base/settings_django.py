@@ -3,7 +3,9 @@ SITE_ID = 1
 # Make this unique, and don't share it with anybody. Set to none so django
 # will complain
 
-SECRET_KEY = None
+from .util import get_env_variable
+
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

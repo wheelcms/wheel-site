@@ -1,5 +1,5 @@
 import os
-BASE=os.path.join(os.path.dirname(__file__), "..")
+BASE=os.path.join(os.path.dirname(__file__), "..", "..")
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
