@@ -11,3 +11,6 @@ TEST_DB = {
 DATABASES = {
     'default': TEST_DB
 }
+
+TEST_MEDIA_ROOT = "/tmp/wheel-cms-test-media"
+CLEANUP_MEDIA = True
