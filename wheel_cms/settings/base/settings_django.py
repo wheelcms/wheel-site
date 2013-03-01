@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
 
+    'wheelsite_site',
 
     'wheelcms_axle',
     'wheelcms_spokes',
