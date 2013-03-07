@@ -37,3 +37,14 @@ DEFAULT_FROM_EMAIL = MAIL_SENDER
 # MIDDLEWARE_CLASSES += \
 # ('debug_toolbar.middleware.DebugToolbarMiddleware', )
 # 
+
+STRACKS_URL = get_env_variable('STRACKS_URL', '')
+
+STRACKS_CONNECTOR = None
+
+if STRACKS_URL:
+    from stracks_api.connector import ASyncHTTPConnector
+    STRACKS_CONNECTOR = ASyncHTTPConnector(STRACKS_URL)
+    MIDDLEWARE_CLASSES += (
+        'stracks_api.middleware.StracksMiddleware',
+    )
