@@ -18,6 +18,7 @@ urlpatterns += patterns('',
                         {'url': '/static/images/favicon.ico'}),
     (r'^tinymce/', include('tinymce.urls')),
     (r'^accounts/', include('userena.urls')),
+    (r'^search/', include('haystack.urls')),
     (r'', include('wheelcms_axle.urls')),
 )
 

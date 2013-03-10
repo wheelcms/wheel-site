@@ -44,6 +44,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
 
+    'haystack',
+
     'wheelsite_site',
 
     'wheelcms_axle',
