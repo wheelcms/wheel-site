@@ -25,12 +25,6 @@ DATABASES = {
     'default': SQLITE_DEFAULT_DB,
 }
 
-MAIL_SENDER = get_env_variable('POSTMARK_SENDER')
-POSTMARK_API_KEY = get_env_variable('POSTMARK_API_KEY')
-POSTMARK_SENDER = MAIL_SENDER
-EMAIL_BACKEND = 'postmark.django_backend.EmailBackend'
-
-DEFAULT_FROM_EMAIL = MAIL_SENDER
 
 # INSTALLED_APPS += ('debug_toolbar', )
 # INTERNAL_IPS = ('127.0.0.1',)
