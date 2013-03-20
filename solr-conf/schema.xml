@@ -104,7 +104,31 @@
     <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>
     
 
+    <field name="description" type="string" indexed="false" stored="true" multiValued="false" />
+
+    <field name="title" type="string" indexed="false" stored="true" multiValued="false" />
+
     <field name="text" type="text" indexed="true" stored="true" multiValued="false" />
+
+    <field name="created" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="modified" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="state" type="text" indexed="true" stored="true" multiValued="false" />
+
+    <field name="meta_type" type="text" indexed="true" stored="true" multiValued="false" />
+
+    <field name="expire" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="owner" type="text" indexed="true" stored="true" multiValued="false" />
+
+    <field name="path" type="text" indexed="true" stored="true" multiValued="false" />
+
+    <field name="icon" type="string" indexed="false" stored="true" multiValued="false" />
+
+    <field name="slug" type="text" indexed="true" stored="true" multiValued="false" />
+
+    <field name="publication" type="date" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 
