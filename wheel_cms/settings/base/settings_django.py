@@ -30,6 +30,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
 
     "wheelcms_axle.context_processors.configuration",
+    "wheelcms_axle.context_processors.toolbar",
 )
 
 ROOT_URLCONF = 'urls'
