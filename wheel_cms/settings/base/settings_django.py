@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'wheelcms_axle',
     'wheelcms_spokes',
 
+    'taggit',
     'tinymce',
     'two.ol',
     'two.bootstrap',
