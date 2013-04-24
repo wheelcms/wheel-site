@@ -1,5 +1,5 @@
 from settings.base import *
-from settings.base.util import get_env_variable
+from wheelcms_project.settings.base.util import get_env_variable
 
 PG_DEFAULT_DB = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

@@ -1,6 +1,6 @@
 from settings.base import *
 
-from .base.util import get_env_variable
+from wheelcms_project.settings.base.util import get_env_variable
 
 SITE_ID = 1
 # local mail config
