@@ -5,6 +5,8 @@ from wheelcms_project.settings.base.util import get_env_variable
 SITE_ID = 1
 # local mail config
 
+ADMINS = ( ( "Ivo", "test-wheel@in.m3r.nl"),  )
+
 DEBUG = True
 
 SQLITE_DEFAULT_DB = {
@@ -25,6 +27,7 @@ DATABASES = {
     'default': SQLITE_DEFAULT_DB,
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # INSTALLED_APPS += ('debug_toolbar', )
 # INTERNAL_IPS = ('127.0.0.1',)
