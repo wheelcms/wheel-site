@@ -16,7 +16,7 @@ DATABASES = {
 
 STATIC_ROOT = get_env_variable('PROJECT_HOME') + '/staticfiles'
 MEDIA_ROOT = get_env_variable('PROJECT_HOME') + '/media'
-DEBUG=False
+DEBUG=True
 
 STRACKS_URL = get_env_variable('STRACKS_URL', '')
 

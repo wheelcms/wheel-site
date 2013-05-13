@@ -5,4 +5,3 @@ INSTALLED_APPS = (
     'wheelsite_site',
     'wheelcms_valve',
 ) + INSTALLED_APPS
-
