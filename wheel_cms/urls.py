@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 
-from wheelcms_project.urls import urlpatterns
+from wheelcms_project.urls import urlpatterns, handler500, handler404
 
 urlpatterns += patterns('',
     # Example:
