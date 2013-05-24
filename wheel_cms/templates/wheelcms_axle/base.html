@@ -1,0 +1,37 @@
+{% extends "wheelcms_axle/wheel_base.html" %}
+
+{% block stylesheets %}
+
+    {{block.super}}
+    <link rel="stylesheet" href="/static/css/wheelcms_carousel.css" media="screen, projection, print"/>
+{% endblock %}
+
+{% block base_footer %}
+<a href="https://github.com/wheelcms"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+<div class="span3">
+    <h5>About us</h5>
+    <p>WheelCMS was developed by Ivo van der Wijk / m3r consultancy B.V.</p>
+    <ul class="vcard">
+      <li>
+        <span class="vcard-icon"><i class="icon-envelope icon-white"></i></span>
+        <span class="vcard-text"><a href="mailto:wheel@in.m3r.nl">wheel@in.m3r.nl</a></span>
+      </li>
+      <li>
+        <span class="vcard-icon"><i class="icon-home icon-white"></i></span>
+        <span class="vcard-text"><a href="http://m3r.nl/">http://m3r.nl</a></span>
+      </li>
+    </ul>
+</div>
+<div class="span3">
+    <h5>Latest Tweets</h5>
+    <p>As soon as we have a working twitter integration.. ;)</p>
+</div>
+<div class="span3">
+    <h5>Contact us</h5>
+    <p>Use the <a href="/+contact">Contact form</a> or find us on freenode irc, channel #wheelcms</p>
+</div>
+<div class="span3">
+    <h5>Copyright</h5>
+    <p>WheelCMS, this site and its contents are &copy; 2013 m3r consultancy B.V.</p>
+</div>
+{% endblock %}
