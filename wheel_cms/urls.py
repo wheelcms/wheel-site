@@ -1,30 +1,16 @@
-from django.contrib import admin
-from django.conf.urls.defaults import patterns, include
-
+from django.conf.urls.defaults import *
 from django.conf import settings
 
-
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-admin.autodiscover()
-
-urlpatterns = staticfiles_urlpatterns()
-
-## or import static_urls; urlpatterns = static_urls.urlpatterns
+from wheelcms_project.urls import urlpatterns, handler500, handler404
 
 urlpatterns += patterns('',
-    (r'^admin/', include(admin.site.urls)),
-    (r'^favicon.ico$', 'django.views.generic.simple.redirect_to',
-                        {'url': '/static/images/favicon.ico'}),
-    (r'^tinymce/', include('tinymce.urls')),
-    (r'^accounts/', include('userena.urls')),
-    (r'^search/', include('haystack.urls')),
-    (r'', include('wheelcms_axle.urls')),
-)
+    # Example:
+    # (r'^{{ project_name }}/', include('{{ project_name }}.foo.urls')),
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT}),
-    )
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    # (r'^admin/', include(admin.site.urls)),
+)
 
