@@ -1,6 +1,6 @@
 from wheelcms_project.settings.base import *
 
-INSTALLED_APPS += ("wheelcms_axle.tests", )
+INSTALLED_APPS += ("wheelcms_axle.tests", "wheelcms_valve")
 
 TEST_DB = {
         'ENGINE': 'django.db.backends.sqlite3',
