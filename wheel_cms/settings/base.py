@@ -1,5 +1,7 @@
 from wheelcms_project.settings.base import *
 
+ALLOW_SIGNUP = False
+
 INSTALLED_APPS = (
     'wheel_cms',
     'wheelcms_carousel',
