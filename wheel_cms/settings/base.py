@@ -7,4 +7,6 @@ INSTALLED_APPS = (
     'wheelcms_carousel',
     'wheelsite_site',
     'wheelcms_valve',
+    'wheelcms_disqus',
+    'wheelcms_rss',
 ) + INSTALLED_APPS
