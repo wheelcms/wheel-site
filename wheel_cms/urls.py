@@ -1,16 +1,13 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 
-from wheelcms_project.urls import urlpatterns, handler500, handler404
+from wheelcms_project.urls import handler500, handler404, basepatterns, wheelpatterns
 
-urlpatterns += patterns('',
-    # Example:
-    # (r'^{{ project_name }}/', include('{{ project_name }}.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+urlpatterns = i18n_patterns('',
+    (r'', include(wheelpatterns)),
+) + patterns('',
+#    (r'^captcha/', include('captcha.urls')),
+    (r'', include(basepatterns)),
 )
 
