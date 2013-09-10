@@ -17,7 +17,8 @@ INSTALLED_APPS = (
 ) + INSTALLED_APPS
 
 MEDIA_ROOT=os.path.join(os.path.dirname(__file__), "..", "..", 'media')
-LANGUAGES = (('en', 'English'), ('nl', 'Nederlands'))
+# LANGUAGES = (('en', 'English'), ('nl', 'Nederlands'))
+LANGUAGES = (('en', 'English'), )
 CONTENT_LANGUAGES = LANGUAGES
 FALLBACK = 'en'
 LANGUAGE_CODE = 'en'

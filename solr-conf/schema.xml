@@ -106,6 +106,8 @@
 
     <field name="description" type="string" indexed="false" stored="true" multiValued="false" />
 
+    <field name="language" type="text" indexed="true" stored="true" multiValued="false" />
+
     <field name="title" type="string" indexed="false" stored="true" multiValued="false" />
 
     <field name="text" type="text" indexed="true" stored="true" multiValued="false" />
