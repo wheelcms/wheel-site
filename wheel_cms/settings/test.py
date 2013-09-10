@@ -7,6 +7,8 @@ TEST_DB = {
         'NAME': 'memory:///'
 }
 
+CONTENT_LANGUAGES = ('any',)
+FALLBACK = 'any'
 
 DATABASES = {
     'default': TEST_DB
