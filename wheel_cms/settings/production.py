@@ -15,8 +15,6 @@ if not DATABASE_URL:
             'default': PG_DEFAULT_DB
     }
 
-STATIC_ROOT = get_env_variable('PROJECT_HOME') + '/staticfiles'
-MEDIA_ROOT = get_env_variable('PROJECT_HOME') + '/media'
 DEBUG=False
 
 STRACKS_URL = get_env_variable('STRACKS_URL', '')
