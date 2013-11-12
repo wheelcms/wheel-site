@@ -18,6 +18,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # ('debug_toolbar.middleware.DebugToolbarMiddleware', )
 # 
 
+LANGUAGES = (('en', 'English'), ('nl', 'Nederlands'))
+# LANGUAGES = (('en', 'English'), )
+CONTENT_LANGUAGES = LANGUAGES
+
 STRACKS_URL = get_env_variable('STRACKS_URL', '')
 
 STRACKS_CONNECTOR = None
