@@ -1,12 +1,12 @@
 {% extends "wheelcms_axle/wheel_base.html" %}
 {% load staticfiles %}
-{% load fragments %}
+{% load granules %}
 
-{% block fragments %}
+{% block granules %}
   {{block.super}}
-  {% fragment "base_stylesheets" %}
+  {% granule "base_stylesheets" %}
     <link rel="stylesheet" href="{% static "css/wheelsite.css" %}" media="screen, projection, print"/>
-  {% endfragment %}
+  {% endgranule %}
 {% endblock %}
 
 {% block topbar_brand %}
