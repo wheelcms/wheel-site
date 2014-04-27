@@ -3,7 +3,7 @@ from wheelcms_project.settings.base.util import get_env_variable
 
 DEBUG=False
 
-STRACKS_URL = get_env_variable('STRACKS_URL', '')
+STRACKS_URL = None # get_env_variable('STRACKS_URL', '')
 
 STRACKS_CONNECTOR = None
 
