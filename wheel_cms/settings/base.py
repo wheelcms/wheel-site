@@ -14,6 +14,8 @@ INSTALLED_APPS = (
     'wheelcms_valve',
     'wheelcms_disqus',
     'wheelcms_rss',
+    'wheelcms_users',
+    'drole',
 ) + INSTALLED_APPS
 
 # LANGUAGES = (('en', 'English'), ('nl', 'Nederlands'))

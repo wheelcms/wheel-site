@@ -1,5 +1,4 @@
-from django.conf.urls.defaults import *
-from django.conf import settings
+from django.conf.urls import *
 from django.conf.urls.i18n import i18n_patterns
 
 from wheelcms_project.urls import handler500, handler404, basepatterns, wheelpatterns
