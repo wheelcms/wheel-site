@@ -13,3 +13,5 @@ if STRACKS_URL:
     MIDDLEWARE_CLASSES += (
         'stracks_api.middleware.StracksMiddleware',
     )
+
+ALLOWED_HOSTS = ["wheelcms.io", "demo.wheelcms.io", "www.wheelcms.io", "demo2.wheelcms.io"]
