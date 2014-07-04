@@ -8,6 +8,8 @@ SITE_ID = 1
 ADMINS = ( ( "Ivo", "test-wheel@in.m3r.nl"),  )
 
 DEBUG = True
+TEMPLATE_DEBUG = True
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

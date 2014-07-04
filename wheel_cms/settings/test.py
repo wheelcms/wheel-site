@@ -1,4 +1,4 @@
-from wheelcms_project.settings.base import *
+from .base import *
 
 INSTALLED_APPS += ("wheelcms_axle.tests", "wheelcms_valve")
 
@@ -17,4 +17,8 @@ DATABASES = {
 TEST_MEDIA_ROOT = "/tmp/wheel-cms-test-media"
 CLEANUP_MEDIA = True
 
-HAYSTACK_SEARCH_ENGINE = "simple"
+HAYSTACK_CONNECTIONS={'default':{'engine':'haystack.backends.simple_backend.SimpleEngine'}}
+
+CONTENT_LANGUAGES=(('en', 'English'), ('nl', 'Nederlands'))
+FALLBACK='en'
+LANGUAGE_CODE='en'
