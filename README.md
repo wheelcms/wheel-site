@@ -26,7 +26,7 @@ project "wheel-site". Simply clone it and run buildout:
       (...)
     $ bin/pip install zc.buildout
       (...)
-    $ bin/buildout
+    $ bin/buildout -c local.cfg
       (...)
     $ bin/django syncdb
 
